@@ -6,11 +6,10 @@ import lombok.Data;
 
 
 
-
 @Entity
-@Table(name = "usuarios")
+@Table(name = "entrenador")
 @Data
-public class usuario {
+public class entrenador {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,19 +28,9 @@ public class usuario {
     @Column(nullable = false, unique = true)
     private String email;
 
-    @NotBlank(message = "El nombre de usuario es obligatorio")
-    @Column(nullable = false, unique = true)
-    private String username;
-
-    @NotBlank(message = "La contraseña es obligatoria")
+    @NotBlank(message = "El telefono es obligatorio")
     @Column(nullable = false)
-    private String password;
-
-    @Pattern(regexp = "^[0-9]{8,15}$", message = "Teléfono inválido (8-15 dígitos)")
     private String telefono;
-
-    private String direccion;
-
 
     private Boolean activo;
 
