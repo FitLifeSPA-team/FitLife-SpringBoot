@@ -13,7 +13,7 @@ import java.util.List;
 public class entrenadorServiceImpl implements entrenadorService {
     
     private final entrenadorRepository repository;
-
+//CONTROLLER
     public entrenadorServiceImpl(entrenadorRepository repository) {
         this.repository = repository;
     }
@@ -41,7 +41,7 @@ public class entrenadorServiceImpl implements entrenadorService {
         }
         return repository.save(entrenador);
     }
-
+// MODEL
     @Override
     public entrenador actualizar(Long id, entrenador entrenador) {
         entrenador existente = buscarPorId(id);
