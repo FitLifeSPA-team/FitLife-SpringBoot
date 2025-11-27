@@ -29,5 +29,5 @@ public class plan_entrenamiento {
 
     private Boolean activo;
 
-    // getters y setters (o usa Lombok @Data)
+    
 }
