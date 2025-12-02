@@ -1,6 +1,6 @@
 #FileLock
-#Thu Nov 27 10:45:17 CLST 2025
-hostName=10.155.30.178
-id=19ac58fa6ea3017ee2124d1247d891a21ddf7d80675
+#Mon Dec 01 22:22:18 CLST 2025
+hostName=ZEUS
+id=19adca73bf49fc02c91973b54b4db487ca4b43c57ff
 method=file
-server=10.155.30.178\:52074
+server=127.0.1.1\:45105
