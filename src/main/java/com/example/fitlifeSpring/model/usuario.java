@@ -4,9 +4,6 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.Data;
 
-
-
-
 @Entity
 @Table(name = "usuarios")
 @Data
@@ -42,8 +39,10 @@ public class usuario {
 
     private String direccion;
 
+    // NUEVO: Campo de rol
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Role role = Role.USER;
 
     private Boolean activo;
-
-    // getters y setters (o usa Lombok @Data)
 }

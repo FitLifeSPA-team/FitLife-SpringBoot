@@ -3,6 +3,8 @@ package com.example.fitlifeSpring.service.impl;
 import com.example.fitlifeSpring.model.usuario;
 import com.example.fitlifeSpring.repository.usuarioRepository;
 import com.example.fitlifeSpring.service.usuarioService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,6 +15,10 @@ import java.util.List;
 public class usuarioServiceImpl implements usuarioService {
     
     private final usuarioRepository repository;
+    
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+    
     public usuarioServiceImpl(usuarioRepository repository) {
         this.repository = repository;
     }
@@ -25,7 +31,7 @@ public class usuarioServiceImpl implements usuarioService {
     @Override
     public usuario buscarPorId(Long id) {
         return repository.findById(id)
-            .orElseThrow(() -> new RuntimeException("Entrenador no encontrado con id: " + id));
+            .orElseThrow(() -> new RuntimeException("Usuario no encontrado con id: " + id));
     }
 
     @Override
@@ -38,6 +44,10 @@ public class usuarioServiceImpl implements usuarioService {
         if (usuario.getActivo() == null) {
             usuario.setActivo(true);
         }
+        // NUEVO: Encriptar contraseña antes de guardar
+        if (usuario.getPassword() != null && !usuario.getPassword().isEmpty()) {
+            usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
+        }
         return repository.save(usuario);
     }
 
@@ -48,7 +58,12 @@ public class usuarioServiceImpl implements usuarioService {
         existente.setApellido(usuario.getApellido());
         existente.setEmail(usuario.getEmail());
         existente.setUsername(usuario.getUsername());
-        existente.setPassword(usuario.getPassword());
+        
+        // NUEVO: Solo actualizar password si se proporciona uno nuevo
+        if (usuario.getPassword() != null && !usuario.getPassword().isEmpty()) {
+            existente.setPassword(passwordEncoder.encode(usuario.getPassword()));
+        }
+        
         existente.setTelefono(usuario.getTelefono());
         existente.setDireccion(usuario.getDireccion());
         
