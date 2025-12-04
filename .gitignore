@@ -4,6 +4,9 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 
+fitlife.lock.db
+fitlife.mv.db
+
 ### STS ###
 .apt_generated
 .classpath

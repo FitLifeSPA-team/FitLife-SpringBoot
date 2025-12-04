@@ -47,31 +47,30 @@ public class SecurityConfig {
                 .requestMatchers("/doc/**", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
                 
                 // ============================================
-                // ENTRENADORES
+                // PERMITIR VER DATOS PÚBLICAMENTE (GET)
                 // ============================================
-                // GET - Cualquier usuario autenticado puede VER entrenadores
-                .requestMatchers(HttpMethod.GET, "/api/v1/entrenador/**").authenticated()
-                // POST, PUT, DELETE - Solo ADMIN o TRAINER pueden modificar
+                // Permitir que cualquiera VEA entrenadores, planes y nutrición
+                .requestMatchers(HttpMethod.GET, "/api/v1/entrenador/**").permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/v1/plan_entrenamiento/**").permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/v1/plan_nutricional/**").permitAll()
+                
+                // ============================================
+                // ENTRENADORES (Modificación requiere autenticación)
+                // ============================================
                 .requestMatchers(HttpMethod.POST, "/api/v1/entrenador/**").hasAnyRole("ADMIN", "TRAINER")
                 .requestMatchers(HttpMethod.PUT, "/api/v1/entrenador/**").hasAnyRole("ADMIN", "TRAINER")
                 .requestMatchers(HttpMethod.DELETE, "/api/v1/entrenador/**").hasAnyRole("ADMIN", "TRAINER")
                 
                 // ============================================
-                // PLANES DE ENTRENAMIENTO
+                // PLANES DE ENTRENAMIENTO (Solo ADMIN modifica)
                 // ============================================
-                // GET - Cualquier usuario autenticado puede VER planes
-                .requestMatchers(HttpMethod.GET, "/api/v1/plan_entrenamiento/**").authenticated()
-                // POST, PUT, DELETE - Solo ADMIN puede modificar
                 .requestMatchers(HttpMethod.POST, "/api/v1/plan_entrenamiento/**").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.PUT, "/api/v1/plan_entrenamiento/**").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.DELETE, "/api/v1/plan_entrenamiento/**").hasRole("ADMIN")
                 
                 // ============================================
-                // PLANES NUTRICIONALES
+                // PLANES NUTRICIONALES (Solo ADMIN modifica)
                 // ============================================
-                // GET - Cualquier usuario autenticado puede VER planes nutricionales
-                .requestMatchers(HttpMethod.GET, "/api/v1/plan_nutricional/**").authenticated()
-                // POST, PUT, DELETE - Solo ADMIN puede modificar
                 .requestMatchers(HttpMethod.POST, "/api/v1/plan_nutricional/**").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.PUT, "/api/v1/plan_nutricional/**").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.DELETE, "/api/v1/plan_nutricional/**").hasRole("ADMIN")
@@ -81,7 +80,7 @@ public class SecurityConfig {
                 // ============================================
                 .requestMatchers(HttpMethod.GET, "/api/v1/usuario/**").authenticated()
                 .requestMatchers(HttpMethod.POST, "/api/v1/usuario/**").hasRole("ADMIN")
-                .requestMatchers(HttpMethod.PUT, "/api/v1/usuario/**").authenticated() // Usuarios pueden actualizar su propio perfil
+                .requestMatchers(HttpMethod.PUT, "/api/v1/usuario/**").authenticated()
                 .requestMatchers(HttpMethod.DELETE, "/api/v1/usuario/**").hasRole("ADMIN")
                 
                 // Resto de rutas requieren autenticación
